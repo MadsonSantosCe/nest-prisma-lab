@@ -7,10 +7,10 @@ import { PrismaService } from "src/database/prisma.service";
 export class PrismaUserRepository implements IUserRepository {
   constructor(private readonly prisma: PrismaService) {}
 
-  async findByEmail(email: string): Promise<User> {
+  async findByEmail(email: string): Promise<User | null> {
     const user = await this.prisma.user.findUnique({ where: { email } });
 
-    if (!user) throw new NotFoundException("Usuário não encontrado");
+    if (!user) return null;
 
     return new User(
       user.id,
@@ -45,7 +45,6 @@ export class PrismaUserRepository implements IUserRepository {
         name: user.name,
         email: user.email,
         password: user.password,
-        updated_at: new Date(),
       },
     });
 
@@ -58,11 +57,13 @@ export class PrismaUserRepository implements IUserRepository {
     );
   }
 
-  async updateVerified(id: string, verified: boolean): Promise<User> {
+  async updateVerified(id: string, verified: boolean): Promise<User | null> {
     const updated = await this.prisma.user.update({
       where: { id },
       data: { verified },
     });
+
+    if (!updated) return null;
 
     return new User(
       updated.id,

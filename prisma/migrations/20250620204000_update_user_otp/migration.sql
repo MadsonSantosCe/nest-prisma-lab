@@ -17,11 +17,7 @@ CREATE TABLE "user" (
     "email" TEXT NOT NULL,
     "password" TEXT NOT NULL,
     "verified" BOOLEAN NOT NULL DEFAULT false,
-    "created_by" TEXT,
     "created_at" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
-    "updated_by" TEXT,
-    "updated_at" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
-    "deleted_by" TEXT,
     "deleted_at" TIMESTAMP(3),
 
     CONSTRAINT "user_pkey" PRIMARY KEY ("id")
@@ -34,11 +30,7 @@ CREATE TABLE "user_otp" (
     "user_id" TEXT NOT NULL,
     "type" "OtpType" NOT NULL,
     "expires_at" TIMESTAMP(3) NOT NULL,
-    "created_by" TEXT,
     "created_at" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
-    "updated_by" TEXT,
-    "updated_at" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
-    "deleted_by" TEXT,
     "deleted_at" TIMESTAMP(3),
 
     CONSTRAINT "user_otp_pkey" PRIMARY KEY ("id")

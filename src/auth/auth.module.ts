@@ -4,6 +4,8 @@ import { PrismaModule } from "src/database/prisma.module";
 import { PrismaOtpRepository } from "./infrastructure/repositories/PrismaOtpRepository";
 import { PrismaUserRepository } from "./infrastructure/repositories/PrismaUserRepository";
 import { EmailService } from "./infrastructure/services/EmailService";
+import { SignUpUseCase } from "./application/usecases/SignUpUseCase";
+import { AuthController } from "./presentation/auth.controller";
 
 @Module({
   imports: [
@@ -26,6 +28,8 @@ import { EmailService } from "./infrastructure/services/EmailService";
       provide: "IEmailService",
       useClass: EmailService,
     },
+    SignUpUseCase,
   ],
+  controllers: [AuthController],
 })
 export class AuthModule {}

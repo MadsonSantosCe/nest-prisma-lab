@@ -1,7 +1,7 @@
 import { IEmailService } from "../../domain/interfaces/IEmailService";
-import nodemailer from "nodemailer";
 import { PASSWORD_RESET_REQUEST_TEMPLATE, VERIFICATION_EMAIL_TEMPLATE } from "../utils/email.templates";
 import { Injectable } from "@nestjs/common";
+import * as nodemailer from "nodemailer";
 
 @Injectable()
 export class EmailService implements IEmailService {

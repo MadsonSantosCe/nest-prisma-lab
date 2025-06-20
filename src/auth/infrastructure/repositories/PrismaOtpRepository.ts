@@ -50,7 +50,7 @@ export class PrismaOtpRepository implements IOtpRepository {
       newOtp.type as OtpType,
       newOtp.user_id,
       newOtp.expires_at,
-      newOtp.expires_at
+      newOtp.deleted_at
     );
   }
 
