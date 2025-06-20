@@ -1,4 +1,4 @@
-import { IUserRepository } from "../../domain/repositories/IUserRepository";
+import { IUserRepository } from "../../domain/interfaces/IUserRepository";
 import { User } from "../../domain/entities/User";
 import { Injectable, NotFoundException } from "@nestjs/common";
 import { PrismaService } from "src/database/prisma.service";
@@ -7,7 +7,7 @@ import { PrismaService } from "src/database/prisma.service";
 export class PrismaUserRepository implements IUserRepository {
   constructor(private readonly prisma: PrismaService) {}
 
-  async findByEmail(email: string): Promise<User | null> {
+  async findByEmail(email: string): Promise<User> {
     const user = await this.prisma.user.findUnique({ where: { email } });
 
     if (!user) throw new NotFoundException("Usuário não encontrado");
@@ -21,7 +21,7 @@ export class PrismaUserRepository implements IUserRepository {
     );
   }
 
-  async findById(id: string): Promise<User | null> {
+  async findById(id: string): Promise<User> {
     const user = await this.prisma.user.findUnique({ where: { id } });
 
     if (!user) throw new NotFoundException("Usuário não encontrado");

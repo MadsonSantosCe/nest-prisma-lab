@@ -1,4 +1,4 @@
-import { IOtpRepository } from "../../domain/repositories/IOtpRepository";
+import { IOtpRepository } from "../../domain/interfaces/IOtpRepository";
 import { Otp, OtpType } from "../../domain/entities/Otp";
 import { BadRequestException, Injectable } from "@nestjs/common";
 import { PrismaService } from "src/database/prisma.service";
