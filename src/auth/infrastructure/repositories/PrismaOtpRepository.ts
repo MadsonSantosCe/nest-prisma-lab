@@ -1,10 +1,11 @@
-import { PrismaClient } from "@prisma/client";
 import { IOtpRepository } from "../../domain/repositories/IOtpRepository";
 import { Otp, OtpType } from "../../domain/entities/Otp";
-import { BadRequestException } from "@nestjs/common";
+import { BadRequestException, Injectable } from "@nestjs/common";
+import { PrismaService } from "src/database/prisma.service";
 
+@Injectable()
 export class PrismaOtpRepository implements IOtpRepository {
-  constructor(private readonly prisma: PrismaClient) {}
+  constructor(private readonly prisma: PrismaService) {}
 
   async findValidOtp(code: string, type: OtpType): Promise<Otp | null> {
     const otp = await this.prisma.otp.findFirst({
