@@ -1,9 +1,3 @@
-// This is your Prisma schema file,
-// learn more about it in the docs: https://pris.ly/d/prisma-schema
-
-// Looking for ways to speed up your queries, or scale easily with your serverless or edge functions?
-// Try Prisma Accelerate: https://pris.ly/cli/accelerate-init
-
 generator client {
   provider = "prisma-client-js"
 }
@@ -13,10 +7,46 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
+enum OtpType {
+  EMAIL_VERIFICATION
+  PASSWORD_RESET
+}
+
 model User {
-  id    Int    @id @default(autoincrement())
-  name  String
-  email String @unique
-  age   Int?
-  createdAt DateTime @default(now())
+  id          String      @id @default(uuid())
+  name        String
+  email       String      @unique
+  password    String
+  verified    Boolean     @default(false)
+
+  created_by  String?
+  created_at  DateTime    @default(now())
+  updated_by  String?
+  updated_at  DateTime    @default(now())
+  deleted_by  String?
+  deleted_at  DateTime? 
+
+  otps Otp[]
+
+  @@map("user")
+}
+
+model Otp {
+  id          String      @id @default(uuid())
+  code        String
+  user_id     String      @unique
+  user        User        @relation(fields: [user_id], references: [id], onDelete: Cascade)
+  type        OtpType 
+  expires_at  DateTime
+
+  created_by  String?
+  created_at  DateTime    @default(now())
+  updated_by  String?
+  updated_at  DateTime    @default(now())
+  deleted_by  String?
+  deleted_at  DateTime? 
+
+  @@map("user_otp")
+  @@index([user_id, type, code])
+  @@index([user_id])
 }
