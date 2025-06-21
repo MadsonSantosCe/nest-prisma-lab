@@ -1,6 +1,6 @@
+import { BadRequestException, Injectable } from "@nestjs/common";
 import { OtpRepository } from "../../domain/repositories/OtpRepository";
 import { Otp, OtpType } from "../../domain/entities/Otp";
-import { BadRequestException, Injectable } from "@nestjs/common";
 import { PrismaService } from "src/database/prisma.service";
 
 @Injectable()
