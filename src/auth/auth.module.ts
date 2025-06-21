@@ -12,8 +12,9 @@ import { OtpRepository } from "./domain/repositories/otp.repository";
 import { EmailService } from "./domain/services/email.service";
 import { TokenService } from "./domain/services/token.service";
 
-import { SignUpUseCase } from "./application/usecases/sign-up.usecase";
 import { AuthController } from "./presentation/auth.controller";
+import { SignUpUseCase } from "./application/usecases/sign-up.usecase";
+import { SignInUseCase } from "./application/usecases/sign-in.usecase";
 
 @Module({
   imports: [
@@ -28,6 +29,7 @@ import { AuthController } from "./presentation/auth.controller";
     NodemailerEmailService,
     JwtTokenService,
     SignUpUseCase,
+    SignInUseCase,
     {
       provide: UserRepository,
       useClass: PrismaUserRepository,

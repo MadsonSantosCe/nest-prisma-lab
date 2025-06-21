@@ -12,7 +12,7 @@ export class JwtTokenService implements TokenService {
       { id: userId },
       { expiresIn: expiresIn }
     );
-    return { token };
+    return token;
   }
 
   verifyToken(token: string): { id: string } {

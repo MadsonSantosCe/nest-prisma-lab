@@ -1,9 +1,9 @@
 import { Injectable, ConflictException } from "@nestjs/common";
-import * as bcrypt from "bcryptjs";
 import { UserRepository } from "src/auth/domain/repositories/user.repository";
 import { OtpRepository } from "src/auth/domain/repositories/otp.repository";
 import { EmailService } from "src/auth/domain/services/email.service";
 import { OtpType } from "../../domain/entities/Otp";
+import * as bcrypt from "bcryptjs";
 
 @Injectable()
 export class SignUpUseCase {
