@@ -1,6 +1,5 @@
-
 import { Injectable } from "@nestjs/common";
-import { IEmailService } from "../../domain/repositories/IEmailService";
+import { EmailContract } from "../../domain/contracts/EmailContract";
 import * as nodemailer from "nodemailer";
 
 import {
@@ -9,7 +8,7 @@ import {
 } from "../utils/email.templates";
 
 @Injectable()
-export class EmailService implements IEmailService {
+export class EmailService implements EmailContract {
   sendVerificationEmail = async (
     to: string,
     verifyCode: string
