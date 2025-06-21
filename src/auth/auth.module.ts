@@ -3,9 +3,12 @@ import { JwtModule } from "@nestjs/jwt";
 import { PrismaModule } from "src/database/prisma.module";
 import { PrismaOtpRepository } from "./infrastructure/repositories/PrismaOtpRepository";
 import { PrismaUserRepository } from "./infrastructure/repositories/PrismaUserRepository";
+import { EmailService as IEmailService } from "./domain/repositories/EmailService";
 import { EmailService } from "./infrastructure/services/EmailService";
 import { SignUpUseCase } from "./application/usecases/SignUpUseCase";
 import { AuthController } from "./presentation/auth.controller";
+import { UserRepository } from "./domain/repositories/UserRepository";
+import { OtpRepository } from "./domain/repositories/OtpRepository";
 
 @Module({
   imports: [
@@ -16,19 +19,22 @@ import { AuthController } from "./presentation/auth.controller";
     }),
   ],
   providers: [
+    PrismaUserRepository,
+    PrismaOtpRepository,
+    EmailService,
+    SignUpUseCase,
     {
-      provide: "IUserRepository",
+      provide: UserRepository,
       useClass: PrismaUserRepository,
     },
     {
-      provide: "IOtpRepository",
+      provide: OtpRepository,
       useClass: PrismaOtpRepository,
     },
     {
-      provide: "IEmailService",
+      provide: IEmailService,
       useClass: EmailService,
     },
-    SignUpUseCase,
   ],
   controllers: [AuthController],
 })
