@@ -1,8 +1,8 @@
 import { Injectable, ConflictException } from "@nestjs/common";
 import * as bcrypt from "bcryptjs";
-import { UserRepository } from "src/auth/domain/contracts/UserRepository";
-import { OtpRepository } from "src/auth/domain/contracts/OtpRepository";
-import { EmailContract } from "src/auth/domain/contracts/EmailContract";
+import { UserRepository } from "src/auth/domain/contracts/user.repository";
+import { OtpRepository } from "src/auth/domain/contracts/otp.repository";
+import { EmailContract } from "src/auth/domain/contracts/email.contract";
 import { OtpType } from "../../domain/entities/Otp";
 
 @Injectable()

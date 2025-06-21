@@ -1,5 +1,5 @@
 import { Injectable } from "@nestjs/common";
-import { EmailContract } from "../../domain/contracts/EmailContract";
+import { EmailContract } from "../../domain/contracts/email.contract";
 import * as nodemailer from "nodemailer";
 
 import {

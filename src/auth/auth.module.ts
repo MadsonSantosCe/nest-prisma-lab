@@ -2,15 +2,17 @@ import { Module } from "@nestjs/common";
 import { JwtModule } from "@nestjs/jwt";
 import { PrismaModule } from "src/database/prisma.module";
 
-import { PrismaUserRepository } from "./infrastructure/repositories/PrismaUserRepository";
-import { PrismaOtpRepository } from "./infrastructure/repositories/PrismaOtpRepository";
-import { EmailService } from "./infrastructure/services/EmailService";
-import { SignUpUseCase } from "./application/usecases/SignUpUseCase";
-import { AuthController } from "./presentation/AuthController";
+import { PrismaUserRepository } from "./infrastructure/repositories/prisma.user.repository";
+import { PrismaOtpRepository } from "./infrastructure/repositories/prisma.otp.repository";
+import { EmailService } from "./infrastructure/services/email.service";
+import { SignUpUseCase } from "./application/usecases/sign-up.usecase";
+import { AuthController } from "./presentation/auth.controller";
 
-import { UserRepository } from "./domain/contracts/UserRepository";
-import { OtpRepository } from "./domain/contracts/OtpRepository";
-import { EmailContract } from "./domain/contracts/EmailContract";
+import { UserRepository } from "./domain/contracts/user.repository";
+import { OtpRepository } from "./domain/contracts/otp.repository";
+import { EmailContract } from "./domain/contracts/email.contract";
+import { JwtTokenService } from "./infrastructure/services/jwt.token.service";
+import { TokenContract } from "./domain/contracts/token.contract";
 
 @Module({
   imports: [
@@ -23,6 +25,7 @@ import { EmailContract } from "./domain/contracts/EmailContract";
     PrismaUserRepository,
     PrismaOtpRepository,
     EmailService,
+    JwtTokenService,
     SignUpUseCase,
     {
       provide: UserRepository,
@@ -35,6 +38,10 @@ import { EmailContract } from "./domain/contracts/EmailContract";
     {
       provide: EmailContract,
       useClass: EmailService,
+    },
+    {
+      provide: TokenContract,
+      useClass: JwtTokenService,
     },
   ],
   controllers: [AuthController],
