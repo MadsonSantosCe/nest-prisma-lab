@@ -7,19 +7,15 @@ import { Response } from "express";
 export class JwtTokenService implements TokenService {
   constructor(private readonly jwtService: JwtService) {}
 
-  generateTokens(userId: string) {
-    const accessToken = this.jwtService.sign(
+  generateToken(userId: string, expiresIn: string) {
+    const token = this.jwtService.sign(
       { id: userId },
-      { expiresIn: "15m" }
+      { expiresIn: expiresIn }
     );
-    const refreshToken = this.jwtService.sign(
-      { id: userId },
-      { expiresIn: "7d" }
-    );
-    return { accessToken, refreshToken };
+    return { token };
   }
 
-  verifyRefreshToken(token: string): { id: string } {
+  verifyToken(token: string): { id: string } {
     try {
       return this.jwtService.verify(token, { secret: process.env.JWT_SECRET });
     } catch {
