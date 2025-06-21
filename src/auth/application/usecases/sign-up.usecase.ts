@@ -13,15 +13,7 @@ export class SignUpUseCase {
     private readonly emailService: EmailService
   ) {}
 
-  async execute({
-    name,
-    email,
-    password,
-  }: {
-    name: string;
-    email: string;
-    password: string;
-  }) {
+  async execute(name: string, email: string, password: string) {
     const existingUser = await this.userRepository.findByEmail(email);
 
     if (existingUser) {

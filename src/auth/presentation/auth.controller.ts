@@ -14,13 +14,13 @@ export class AuthController {
   @HttpCode(201)
   async signUp(@Req() req) {
     const { name, email, password } = req.body;
-    return await this.signUpUseCase.execute({ name, email, password });
+    return await this.signUpUseCase.execute(name, email, password);
   }
 
   @Post("sign-in")
   @HttpCode(200)
   async signIn(@Req() req, @Res({ passthrough: true }) res: Response) {
     const { email, password } = req.body;
-    return await this.signInUseCase.execute(email, password, res );
+    return await this.signInUseCase.execute(email, password, res);
   }
 }
