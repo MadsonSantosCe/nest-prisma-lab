@@ -3,10 +3,10 @@ import { JwtModule } from "@nestjs/jwt";
 import { PrismaModule } from "src/database/prisma.module";
 import { PrismaOtpRepository } from "./infrastructure/repositories/PrismaOtpRepository";
 import { PrismaUserRepository } from "./infrastructure/repositories/PrismaUserRepository";
-import { EmailService as IEmailService } from "./domain/repositories/EmailService";
+import { IEmailService } from "./domain/repositories/IEmailService";
 import { EmailService } from "./infrastructure/services/EmailService";
 import { SignUpUseCase } from "./application/usecases/SignUpUseCase";
-import { AuthController } from "./presentation/auth.controller";
+import { AuthController } from "./presentation/AuthController";
 import { UserRepository } from "./domain/repositories/UserRepository";
 import { OtpRepository } from "./domain/repositories/OtpRepository";
 

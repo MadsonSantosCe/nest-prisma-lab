@@ -1,4 +1,4 @@
-import { EmailService as IEmailService } from "../../domain/repositories/EmailService";
+import { IEmailService } from "../../domain/repositories/IEmailService";
 import {
   PASSWORD_RESET_REQUEST_TEMPLATE,
   VERIFICATION_EMAIL_TEMPLATE,
