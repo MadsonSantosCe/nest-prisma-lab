@@ -32,7 +32,12 @@ export class SignInUseCase {
     this.jwtTokenService.setRefreshTokenCookie(refreshToken, res);
 
     return {
-      user: user,
+      user: {
+      id: user.id,
+      name: user.name,
+      email: user.email,
+      verified: user.verified,
+    },
       accessToken,
     };
   }

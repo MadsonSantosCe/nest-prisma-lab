@@ -11,6 +11,7 @@ export class AuthController {
   ) {}
 
   @Post("sign-up")
+  @HttpCode(201)
   async signUp(@Req() req) {
     const { name, email, password } = req.body;
     return await this.signUpUseCase.execute({ name, email, password });
