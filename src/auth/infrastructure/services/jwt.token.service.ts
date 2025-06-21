@@ -1,10 +1,10 @@
 import { Injectable, UnauthorizedException } from "@nestjs/common";
 import { JwtService } from "@nestjs/jwt";
-import { TokenContract } from "../../domain/contracts/token.contract";
+import { TokenService } from "../../domain/services/token.service";
 import { Response } from "express";
 
 @Injectable()
-export class JwtTokenService implements TokenContract {
+export class JwtTokenService implements TokenService {
   constructor(private readonly jwtService: JwtService) {}
 
   generateTokens(userId: string) {
