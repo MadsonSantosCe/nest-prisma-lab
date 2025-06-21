@@ -15,6 +15,7 @@ import { TokenService } from "./domain/services/token.service";
 import { AuthController } from "./presentation/auth.controller";
 import { SignUpUseCase } from "./application/usecases/sign-up.usecase";
 import { SignInUseCase } from "./application/usecases/sign-in.usecase";
+import { VerifyEmailUseCase } from "./application/usecases/verify-email.usecase";
 
 @Module({
   imports: [
@@ -30,6 +31,7 @@ import { SignInUseCase } from "./application/usecases/sign-in.usecase";
     JwtTokenService,
     SignUpUseCase,
     SignInUseCase,
+    VerifyEmailUseCase,
     {
       provide: UserRepository,
       useClass: PrismaUserRepository,

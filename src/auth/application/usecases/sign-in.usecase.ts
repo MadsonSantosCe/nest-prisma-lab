@@ -3,7 +3,7 @@ import {
   Injectable,
   UnauthorizedException,
 } from "@nestjs/common";
-import { Response } from 'express';
+import { Response } from "express";
 import { UserRepository } from "src/auth/domain/repositories/user.repository";
 import { TokenService } from "src/auth/domain/services/token.service";
 import * as bcrypt from "bcryptjs";
@@ -33,11 +33,11 @@ export class SignInUseCase {
 
     return {
       user: {
-      id: user.id,
-      name: user.name,
-      email: user.email,
-      verified: user.verified,
-    },
+        id: user.id,
+        name: user.name,
+        email: user.email,
+        verified: user.verified,
+      },
       accessToken,
     };
   }
