@@ -4,6 +4,7 @@ import { SignUpUseCase } from "../application/usecases/sign-up.usecase";
 import { SignInUseCase } from "../application/usecases/sign-in.usecase";
 import { VerifyEmailUseCase } from "../application/usecases/verify-email.usecase";
 import { SignOutUseCase } from "../application/usecases/sign-out.usecase";
+import { ForgotPasswordUseCase } from "../application/usecases/forgot-password.usecase";
 
 @Controller("auth")
 export class AuthController {
@@ -11,7 +12,8 @@ export class AuthController {
     private readonly signUpUseCase: SignUpUseCase,
     private readonly signInUseCase: SignInUseCase,
     private readonly verifyEmailUseCase: VerifyEmailUseCase,
-    private readonly signOutUseCase: SignOutUseCase
+    private readonly signOutUseCase: SignOutUseCase,
+    private readonly forgotPasswordUseCase: ForgotPasswordUseCase
   ) {}
 
   @Post("sign-up")
@@ -39,5 +41,12 @@ export class AuthController {
   @HttpCode(204)
   async signOut(@Req() req, @Res({ passthrough: true }) res: Response) {
     return this.signOutUseCase.execute(res);
+  }
+
+  @Post("forgot-password")
+  @HttpCode(204)
+  async forgotPassword(@Req() req) {
+    const { email } = req.body;
+    return await this.forgotPasswordUseCase.execute(email);
   }
 }

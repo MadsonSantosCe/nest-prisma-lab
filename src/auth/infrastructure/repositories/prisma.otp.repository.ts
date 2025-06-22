@@ -17,7 +17,7 @@ export class PrismaOtpRepository implements OtpRepository {
       },
     });
 
-    if (!otp) throw new BadRequestException("Código inválido ou expirado");
+    if (!otp) return null;
 
     return new Otp(
       otp.id,
@@ -74,7 +74,7 @@ export class PrismaOtpRepository implements OtpRepository {
       },
     });
 
-    if (!otp) throw new BadRequestException("Código inválido ou expirado");
+    if (!otp) return null;
 
     return new Otp(
       otp.id,
