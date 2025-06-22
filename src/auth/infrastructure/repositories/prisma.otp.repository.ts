@@ -7,7 +7,7 @@ import { PrismaService } from "src/database/prisma.service";
 export class PrismaOtpRepository implements OtpRepository {
   constructor(private readonly prisma: PrismaService) {}
 
-  async findValidOtp(code: string, type: OtpType): Promise<Otp | null> {
+  async findValidOtp(code: string, type: OtpType): Promise<Otp | null> {    
     const otp = await this.prisma.otp.findFirst({
       where: {
         code,

@@ -1,10 +1,11 @@
-import { Controller, HttpCode, Post, Req, Res } from "@nestjs/common";
+import { Controller, HttpCode, Param, Post, Req, Res } from "@nestjs/common";
 import { Response } from "express";
 import { SignUpUseCase } from "../application/usecases/sign-up.usecase";
 import { SignInUseCase } from "../application/usecases/sign-in.usecase";
 import { VerifyEmailUseCase } from "../application/usecases/verify-email.usecase";
 import { SignOutUseCase } from "../application/usecases/sign-out.usecase";
 import { ForgotPasswordUseCase } from "../application/usecases/forgot-password.usecase";
+import { ResetPasswordUseCase } from "../application/usecases/reset-password.usecase";
 
 @Controller("auth")
 export class AuthController {
@@ -13,7 +14,8 @@ export class AuthController {
     private readonly signInUseCase: SignInUseCase,
     private readonly verifyEmailUseCase: VerifyEmailUseCase,
     private readonly signOutUseCase: SignOutUseCase,
-    private readonly forgotPasswordUseCase: ForgotPasswordUseCase
+    private readonly forgotPasswordUseCase: ForgotPasswordUseCase,
+    private readonly resetPasswordUseCase: ResetPasswordUseCase
   ) {}
 
   @Post("sign-up")
@@ -48,5 +50,13 @@ export class AuthController {
   async forgotPassword(@Req() req) {
     const { email } = req.body;
     return await this.forgotPasswordUseCase.execute(email);
+  }
+
+  @Post("reset-password/:token")
+  @HttpCode(204)
+  async resetPassword(
+    @Param('token') token: string ,@Req() req) {
+    const { password } = req.body;
+    return await this.resetPasswordUseCase.execute(token, password);
   }
 }
