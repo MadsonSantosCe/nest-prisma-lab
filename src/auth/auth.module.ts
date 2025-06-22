@@ -16,6 +16,7 @@ import { AuthController } from "./presentation/auth.controller";
 import { SignUpUseCase } from "./application/usecases/sign-up.usecase";
 import { SignInUseCase } from "./application/usecases/sign-in.usecase";
 import { VerifyEmailUseCase } from "./application/usecases/verify-email.usecase";
+import { SignOutUseCase } from "./application/usecases/sign-out.usecase";
 
 @Module({
   imports: [
@@ -32,6 +33,7 @@ import { VerifyEmailUseCase } from "./application/usecases/verify-email.usecase"
     SignUpUseCase,
     SignInUseCase,
     VerifyEmailUseCase,
+    SignOutUseCase,
     {
       provide: UserRepository,
       useClass: PrismaUserRepository,

@@ -4,4 +4,5 @@ export abstract class TokenService {
   abstract generateToken(userId: string, expiresIn: string): string ;
   abstract verifyToken(token: string): { id: string };
   abstract setRefreshTokenCookie(token: string, res: Response): void;
+  abstract clearRefreshTokenCookie(res: Response): void;
 }
