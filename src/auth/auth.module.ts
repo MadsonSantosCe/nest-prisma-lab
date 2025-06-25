@@ -1,6 +1,5 @@
 import { Module } from "@nestjs/common";
 import { JwtModule } from "@nestjs/jwt";
-import { PrismaModule } from "src/database/prisma.module";
 
 import { PrismaUserRepository } from "./infrastructure/repositories/prisma.user.repository";
 import { PrismaOtpRepository } from "./infrastructure/repositories/prisma.otp.repository";
@@ -22,7 +21,6 @@ import { ResetPasswordUseCase } from "./application/usecases/reset-password.usec
 
 @Module({
   imports: [
-    PrismaModule,
     JwtModule.register({
       secret: process.env.JWT_SECRET,
     }),

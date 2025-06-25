@@ -6,7 +6,7 @@ import {
 import { Response } from "express";
 import { UserRepository } from "src/auth/domain/repositories/user.repository";
 import { TokenService } from "src/auth/domain/services/token.service";
-import * as bcrypt from "bcryptjs";
+import bcrypt from "bcryptjs";
 
 @Injectable()
 export class SignInUseCase {

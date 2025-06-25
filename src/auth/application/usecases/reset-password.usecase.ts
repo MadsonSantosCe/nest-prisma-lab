@@ -2,7 +2,7 @@ import { BadRequestException, Injectable, NotFoundException } from "@nestjs/comm
 import { OtpRepository } from "src/auth/domain/repositories/otp.repository";
 import { UserRepository } from "src/auth/domain/repositories/user.repository";
 import { OtpType } from "../../domain/entities/Otp";
-import * as bcrypt from "bcryptjs";
+import bcrypt from "bcryptjs";
 
 @Injectable()
 export class ResetPasswordUseCase {

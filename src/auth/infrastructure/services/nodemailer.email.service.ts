@@ -1,6 +1,6 @@
 import { Injectable } from "@nestjs/common";
 import { EmailService } from "../../domain/services/email.service";
-import * as nodemailer from "nodemailer";
+import nodemailer from "nodemailer";
 
 import {
   PASSWORD_RESET_REQUEST_TEMPLATE,
