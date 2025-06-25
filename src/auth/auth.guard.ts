@@ -1,36 +1,47 @@
-import { CanActivate, ExecutionContext, Injectable, UnauthorizedException } from '@nestjs/common';
-import { Request } from 'express';
-import { JwtService } from '@nestjs/jwt';
+import {
+  CanActivate,
+  ExecutionContext,
+  Injectable,
+  UnauthorizedException,
+} from "@nestjs/common";
+import { Request } from "express";
+import { PrismaService } from "src/database/prisma.service";
+import { TokenService } from "./domain/services/token.service";
 
 @Injectable()
 export class AuthGuard implements CanActivate {
-  constructor(private readonly jwtService: JwtService) {}
+  constructor(
+    private readonly jwtTokenService: TokenService,
+    private readonly prisma: PrismaService
+  ) {}
 
   async canActivate(context: ExecutionContext): Promise<boolean> {
     const request = context.switchToHttp().getRequest<Request>();
     const authHeader = request.headers.authorization;
 
-    if (!authHeader || !authHeader.startsWith('Bearer ')) {
-      throw new UnauthorizedException('Token não informado');
+    if (!authHeader || !authHeader.startsWith("Bearer ")) {
+      throw new UnauthorizedException("Token não informado");
     }
 
-    const token = authHeader.split(' ')[1];
+    const token = authHeader.split(" ")[1];
 
     if (!token) {
-      throw new UnauthorizedException('Token não informado');
+      throw new UnauthorizedException("Token não informado");
     }
-    
+
     try {
-      const payload = this.jwtService.verifyAsync(token)
-      request['user'] = payload;
-      return true;
-    } catch (error) {
+      const payload = this.jwtTokenService.verifyToken(token);
+      const user = await this.prisma.user.findUnique({
+        where: { id: payload.id },
+      });
 
-      if (error instanceof Error && error.name === "TokenExpiredError") {
-        throw new UnauthorizedException("Token expirado");
+      if (!user) {
+        throw new UnauthorizedException("Usuário não encontrado");
       }
-
-      throw new UnauthorizedException('Token inválido');
+      request["user"] = user;
+      return true;
+    } catch {
+      throw new UnauthorizedException("Token inválido");
     }
   }
 }

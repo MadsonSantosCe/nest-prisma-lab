@@ -1,4 +1,4 @@
-import { Controller, HttpCode, Param, Post, Req, Res } from "@nestjs/common";
+import { Controller, Get, HttpCode, Param, Post, Req, Res, UseGuards } from "@nestjs/common";
 import { Response } from "express";
 import { SignUpUseCase } from "../application/usecases/sign-up.usecase";
 import { SignInUseCase } from "../application/usecases/sign-in.usecase";
@@ -7,6 +7,7 @@ import { SignOutUseCase } from "../application/usecases/sign-out.usecase";
 import { ForgotPasswordUseCase } from "../application/usecases/forgot-password.usecase";
 import { ResetPasswordUseCase } from "../application/usecases/reset-password.usecase";
 import { RefreshTokenUseCase } from "../application/usecases/refresh-token.usecase";
+import { AuthGuard } from "../auth.guard";
 
 @Controller("auth")
 export class AuthController {
@@ -67,5 +68,12 @@ export class AuthController {
   async refreshToken(@Req() req) {
     const refreshToken = req.cookies.refreshToken;
     return await this.refreshTokenUseCase.execute(refreshToken);
+  }
+
+  @UseGuards(AuthGuard)  
+  @Get("verify-token")
+  @HttpCode(200)
+  async verifyToken(@Req() req) {
+    return req['user'];
   }
 }
