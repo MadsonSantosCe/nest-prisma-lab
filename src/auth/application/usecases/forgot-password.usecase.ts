@@ -44,7 +44,7 @@ export class ForgotPasswordUseCase {
 
     await this.emailService.sendPasswordResetEmail(
       user.email,
-      `${process.env.CLIENT_URL}/auth/reset-password/${reset_code}`
+      `${process.env.CLIENT_URL}/reset-password/${reset_code}`
     );
   }
 }

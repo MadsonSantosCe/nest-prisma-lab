@@ -18,7 +18,7 @@ import { ResetPasswordUseCase } from "../application/usecases/reset-password.use
 import { RefreshTokenUseCase } from "../application/usecases/refresh-token.usecase";
 import { AuthGuard } from "../infrastructure/guards/auth.guard";
 
-@Controller("auth")
+@Controller("api/auth")
 export class AuthController {
   constructor(
     private readonly signUpUseCase: SignUpUseCase,
@@ -86,7 +86,7 @@ export class AuthController {
   }
 
   @UseGuards(AuthGuard)
-  @Get("verify-token")
+  @Post("verify-acsess-token")
   @HttpCode(200)
   async verifyToken(@Req() req) {
     const user = req["user"];
