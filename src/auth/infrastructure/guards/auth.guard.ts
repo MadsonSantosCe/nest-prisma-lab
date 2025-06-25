@@ -1,13 +1,15 @@
 import {
   CanActivate,
   ExecutionContext,
+  Global,
   Injectable,
   UnauthorizedException,
 } from "@nestjs/common";
 import { Request } from "express";
 import { PrismaService } from "src/database/prisma.service";
-import { TokenService } from "./domain/services/token.service";
+import { TokenService } from "../../domain/services/token.service";
 
+@Global()
 @Injectable()
 export class AuthGuard implements CanActivate {
   constructor(

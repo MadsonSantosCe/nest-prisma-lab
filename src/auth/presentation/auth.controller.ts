@@ -16,7 +16,7 @@ import { SignOutUseCase } from "../application/usecases/sign-out.usecase";
 import { ForgotPasswordUseCase } from "../application/usecases/forgot-password.usecase";
 import { ResetPasswordUseCase } from "../application/usecases/reset-password.usecase";
 import { RefreshTokenUseCase } from "../application/usecases/refresh-token.usecase";
-import { AuthGuard } from "../auth.guard";
+import { AuthGuard } from "../infrastructure/guards/auth.guard";
 
 @Controller("auth")
 export class AuthController {
