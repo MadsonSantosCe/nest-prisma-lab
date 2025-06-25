@@ -1,4 +1,5 @@
 import {
+  Body,
   Controller,
   Get,
   HttpCode,
@@ -17,6 +18,9 @@ import { ForgotPasswordUseCase } from "../application/usecases/forgot-password.u
 import { ResetPasswordUseCase } from "../application/usecases/reset-password.usecase";
 import { RefreshTokenUseCase } from "../application/usecases/refresh-token.usecase";
 import { AuthGuard } from "../infrastructure/guards/auth.guard";
+import { SignUpDto } from "./dto/sign-up.dto";
+import { SignInDto } from "./dto/sign-in.dto";
+import { VerifyEmailDto } from "./dto/verify-email.dto";
 
 @Controller("api/auth")
 export class AuthController {
@@ -32,24 +36,24 @@ export class AuthController {
 
   @Post("sign-up")
   @HttpCode(201)
-  async signUp(@Req() req) {
-    const { name, email, password } = req.body;
+  async signUp(@Body() body: SignUpDto) {
+    const { name, email, password } = body;
     const user = await this.signUpUseCase.execute(name, email, password);
     return {message: "Usuário criado com sucesso", user};
   }
 
   @Post("sign-in")
   @HttpCode(200)
-  async signIn(@Req() req, @Res({ passthrough: true }) res: Response) {
-    const { email, password } = req.body;
+  async signIn(@Body() body : SignInDto, @Res({ passthrough: true }) res: Response) {
+    const { email, password } = body;
     const { user, accessToken } = await this.signInUseCase.execute(email, password, res);
     return { message: "Usuário autenticado com sucesso", user, accessToken};
   }
 
   @Post("verify-email")
   @HttpCode(200)
-  async verifyEmail(@Req() req, @Res({ passthrough: true }) res: Response) {
-    const { code } = req.body;
+  async verifyEmail(@Body() body: VerifyEmailDto, @Res({ passthrough: true }) res: Response) {
+    const { code } = body;
     const { user, accessToken } = await this.verifyEmailUseCase.execute(code, res);
     return { message: "Email verificado com sucesso", user, accessToken};
   }
