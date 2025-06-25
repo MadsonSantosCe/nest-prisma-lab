@@ -18,8 +18,12 @@ export class JwtTokenService implements TokenService {
   verifyToken(token: string): { id: string } {
     try {
       return this.jwtService.verify(token, { secret: process.env.JWT_SECRET });
-    } catch {
-      throw new UnauthorizedException("Invalid refresh token");
+    } catch (error) {
+      if (error instanceof Error && error.name === "TokenExpiredError") {
+        throw new UnauthorizedException("Token expirado");
+      }
+
+      throw new UnauthorizedException("Token inválido");
     }
   }
 

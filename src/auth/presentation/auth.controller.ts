@@ -6,6 +6,7 @@ import { VerifyEmailUseCase } from "../application/usecases/verify-email.usecase
 import { SignOutUseCase } from "../application/usecases/sign-out.usecase";
 import { ForgotPasswordUseCase } from "../application/usecases/forgot-password.usecase";
 import { ResetPasswordUseCase } from "../application/usecases/reset-password.usecase";
+import { RefreshTokenUseCase } from "../application/usecases/refresh-token.usecase";
 
 @Controller("auth")
 export class AuthController {
@@ -15,7 +16,8 @@ export class AuthController {
     private readonly verifyEmailUseCase: VerifyEmailUseCase,
     private readonly signOutUseCase: SignOutUseCase,
     private readonly forgotPasswordUseCase: ForgotPasswordUseCase,
-    private readonly resetPasswordUseCase: ResetPasswordUseCase
+    private readonly resetPasswordUseCase: ResetPasswordUseCase,
+    private readonly refreshTokenUseCase: RefreshTokenUseCase
   ) {}
 
   @Post("sign-up")
@@ -58,5 +60,12 @@ export class AuthController {
     @Param('token') token: string ,@Req() req) {
     const { password } = req.body;
     return await this.resetPasswordUseCase.execute(token, password);
+  }
+
+  @Post("refresh-token")
+  @HttpCode(200)
+  async refreshToken(@Req() req) {
+    const refreshToken = req.cookies.refreshToken;
+    return await this.refreshTokenUseCase.execute(refreshToken);
   }
 }

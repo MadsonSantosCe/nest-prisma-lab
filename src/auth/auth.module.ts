@@ -18,6 +18,7 @@ import { VerifyEmailUseCase } from "./application/usecases/verify-email.usecase"
 import { SignOutUseCase } from "./application/usecases/sign-out.usecase";
 import { ForgotPasswordUseCase } from "./application/usecases/forgot-password.usecase";
 import { ResetPasswordUseCase } from "./application/usecases/reset-password.usecase";
+import { RefreshTokenUseCase } from "./application/usecases/refresh-token.usecase";
 
 @Module({
   imports: [
@@ -36,6 +37,7 @@ import { ResetPasswordUseCase } from "./application/usecases/reset-password.usec
     SignOutUseCase,
     ForgotPasswordUseCase,
     ResetPasswordUseCase,
+    RefreshTokenUseCase,
     {
       provide: UserRepository,
       useClass: PrismaUserRepository,
