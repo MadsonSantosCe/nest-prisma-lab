@@ -1,4 +1,13 @@
-import { Controller, Get, HttpCode, Param, Post, Req, Res, UseGuards } from "@nestjs/common";
+import {
+  Controller,
+  Get,
+  HttpCode,
+  Param,
+  Post,
+  Req,
+  Res,
+  UseGuards,
+} from "@nestjs/common";
 import { Response } from "express";
 import { SignUpUseCase } from "../application/usecases/sign-up.usecase";
 import { SignInUseCase } from "../application/usecases/sign-in.usecase";
@@ -25,55 +34,70 @@ export class AuthController {
   @HttpCode(201)
   async signUp(@Req() req) {
     const { name, email, password } = req.body;
-    return await this.signUpUseCase.execute(name, email, password);
+    const user = await this.signUpUseCase.execute(name, email, password);
+    return {message: "Usuário criado com sucesso", user};
   }
 
   @Post("sign-in")
   @HttpCode(200)
   async signIn(@Req() req, @Res({ passthrough: true }) res: Response) {
     const { email, password } = req.body;
-    return await this.signInUseCase.execute(email, password, res);
+    const { user, accessToken } = await this.signInUseCase.execute(email, password, res);
+    return { message: "Usuário autenticado com sucesso", user, accessToken};
   }
 
   @Post("verify-email")
   @HttpCode(200)
   async verifyEmail(@Req() req, @Res({ passthrough: true }) res: Response) {
     const { code } = req.body;
-    return await this.verifyEmailUseCase.execute(code, res);
+    const { user, accessToken } = await this.verifyEmailUseCase.execute(code, res);
+    return { message: "Email verificado com sucesso", user, accessToken};
   }
 
   @Post("sign-out")
-  @HttpCode(204)
+  @HttpCode(200)
   async signOut(@Req() req, @Res({ passthrough: true }) res: Response) {
-    return this.signOutUseCase.execute(res);
+    this.signOutUseCase.execute(res);
+    return { message: "Usuário desconectado com sucesso" };
   }
 
   @Post("forgot-password")
-  @HttpCode(204)
+  @HttpCode(200)
   async forgotPassword(@Req() req) {
     const { email } = req.body;
-    return await this.forgotPasswordUseCase.execute(email);
+    await this.forgotPasswordUseCase.execute(email);
+    return { message: "Solicitação de redefinição de senha enviada com sucesso" };
   }
 
   @Post("reset-password/:token")
-  @HttpCode(204)
-  async resetPassword(
-    @Param('token') token: string ,@Req() req) {
+  @HttpCode(200)
+  async resetPassword(@Param("token") token: string, @Req() req) {
     const { password } = req.body;
-    return await this.resetPasswordUseCase.execute(token, password);
+    await this.resetPasswordUseCase.execute(token, password);
+    return { message: "Senha redefinida com sucesso" };
   }
 
   @Post("refresh-token")
   @HttpCode(200)
   async refreshToken(@Req() req) {
     const refreshToken = req.cookies.refreshToken;
-    return await this.refreshTokenUseCase.execute(refreshToken);
+    const { user, accessToken } = await this.refreshTokenUseCase.execute(refreshToken);
+    return { message: "Token atualizado com sucesso", user, accessToken };
   }
 
-  @UseGuards(AuthGuard)  
+  @UseGuards(AuthGuard)
   @Get("verify-token")
   @HttpCode(200)
   async verifyToken(@Req() req) {
-    return req['user'];
+    const user = req["user"];
+    return { 
+      message: "Token válidado com sucesso", 
+      user: {
+        id: user?.id,
+        name: user?.name,
+        email: user?.email,
+        verified: user?.verified,
+      }, 
+    };
   }
 }
