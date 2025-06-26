@@ -4,18 +4,18 @@ import {
   Injectable,
   NotFoundException,
 } from "@nestjs/common";
-import { OtpRepository } from "src/auth/domain/repositories/otp.repository";
-import { UserRepository } from "src/auth/domain/repositories/user.repository";
-import { EmailService } from "src/auth/domain/services/email.service";
-import { OtpType } from "../../domain/entities/Otp";
+import { IOtpRepository } from "src/auth/domain/repositories/abstract-otp.repository";
+import { IUserRepository } from "src/auth/domain/repositories/abstract-user.repository";
+import { IEmailService } from "src/auth/domain/services/abstract-email.service";
+import { OtpType } from "../../domain/entities/otp.entity";
 import { v4 as uuidv4 } from "uuid";
 
 @Injectable()
 export class ForgotPasswordUseCase {
   constructor(
-    private userRepository: UserRepository,
-    private otpRepository: OtpRepository,
-    private emailService: EmailService
+    private userRepository: IUserRepository,
+    private otpRepository: IOtpRepository,
+    private emailService: IEmailService
   ) {}
 
   async execute(email: string) {

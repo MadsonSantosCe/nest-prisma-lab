@@ -6,10 +6,10 @@ import { PrismaOtpRepository } from "./infrastructure/repositories/prisma.otp.re
 import { NodemailerEmailService } from "./infrastructure/services/nodemailer.email.service";
 import { JwtTokenService } from "./infrastructure/services/jwt.token.service";
 
-import { UserRepository } from "./domain/repositories/user.repository";
-import { OtpRepository } from "./domain/repositories/otp.repository";
-import { EmailService } from "./domain/services/email.service";
-import { TokenService } from "./domain/services/token.service";
+import { IUserRepository } from "./domain/repositories/abstract-user.repository";
+import { IOtpRepository } from "./domain/repositories/abstract-otp.repository";
+import { IEmailService } from "./domain/services/abstract-email.service";
+import { ITokenService } from "./domain/services/abstract-token.service";
 
 import { AuthController } from "./presentation/auth.controller";
 import { SignUpUseCase } from "./application/usecases/sign-up.usecase";
@@ -39,19 +39,19 @@ import { RefreshTokenUseCase } from "./application/usecases/refresh-token.usecas
     ResetPasswordUseCase,
     RefreshTokenUseCase,
     {
-      provide: UserRepository,
+      provide: IUserRepository,
       useClass: PrismaUserRepository,
     },
     {
-      provide: OtpRepository,
+      provide: IOtpRepository,
       useClass: PrismaOtpRepository,
     },
     {
-      provide: EmailService,
+      provide: IEmailService,
       useClass: NodemailerEmailService,
     },
     {
-      provide: TokenService,
+      provide: ITokenService,
       useClass: JwtTokenService,
     },
   ],

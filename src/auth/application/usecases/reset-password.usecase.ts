@@ -1,18 +1,21 @@
-import { BadRequestException, Injectable, NotFoundException } from "@nestjs/common";
-import { OtpRepository } from "src/auth/domain/repositories/otp.repository";
-import { UserRepository } from "src/auth/domain/repositories/user.repository";
-import { OtpType } from "../../domain/entities/Otp";
+import {
+  BadRequestException,
+  Injectable,
+  NotFoundException,
+} from "@nestjs/common";
+import { IOtpRepository } from "src/auth/domain/repositories/abstract-otp.repository";
+import { IUserRepository } from "src/auth/domain/repositories/abstract-user.repository";
+import { OtpType } from "../../domain/entities/otp.entity";
 import bcrypt from "bcryptjs";
 
 @Injectable()
 export class ResetPasswordUseCase {
   constructor(
-    private otpRepository: OtpRepository,
-    private userRepository: UserRepository
+    private otpRepository: IOtpRepository,
+    private userRepository: IUserRepository
   ) {}
 
-  async execute(token: string, password: string) { 
-
+  async execute(token: string, password: string) {
     if (!token) {
       throw new BadRequestException("Token é obrigatório");
     }

@@ -1,16 +1,16 @@
 import { Injectable, ConflictException } from "@nestjs/common";
-import { UserRepository } from "src/auth/domain/repositories/user.repository";
-import { OtpRepository } from "src/auth/domain/repositories/otp.repository";
-import { EmailService } from "src/auth/domain/services/email.service";
-import { OtpType } from "../../domain/entities/Otp";
+import { IUserRepository } from "src/auth/domain/repositories/abstract-user.repository";
+import { IOtpRepository } from "src/auth/domain/repositories/abstract-otp.repository";
+import { IEmailService } from "src/auth/domain/services/abstract-email.service";
+import { OtpType } from "../../domain/entities/otp.entity";
 import bcrypt from "bcryptjs";
 
 @Injectable()
 export class SignUpUseCase {
   constructor(
-    private readonly userRepository: UserRepository,
-    private readonly otpRepository: OtpRepository,
-    private readonly emailService: EmailService
+    private readonly userRepository: IUserRepository,
+    private readonly otpRepository: IOtpRepository,
+    private readonly emailService: IEmailService
   ) {}
 
   async execute(name: string, email: string, password: string) {

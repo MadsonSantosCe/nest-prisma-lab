@@ -1,4 +1,4 @@
-export class User {
+export class AuthUser {
   constructor(
     public id: string,
     public name: string,

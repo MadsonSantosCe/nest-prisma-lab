@@ -4,17 +4,17 @@ import {
   NotFoundException,
 } from "@nestjs/common";
 import { Response } from "express";
-import { OtpRepository } from "src/auth/domain/repositories/otp.repository";
-import { UserRepository } from "src/auth/domain/repositories/user.repository";
-import { TokenService } from "src/auth/domain/services/token.service";
-import { OtpType } from "../../domain/entities/Otp";
+import { IOtpRepository } from "src/auth/domain/repositories/abstract-otp.repository";
+import { IUserRepository } from "src/auth/domain/repositories/abstract-user.repository";
+import { ITokenService } from "src/auth/domain/services/abstract-token.service";
+import { OtpType } from "../../domain/entities/otp.entity";
 
 @Injectable()
 export class VerifyEmailUseCase {
   constructor(
-    private readonly otpRepository: OtpRepository,
-    private readonly userRepository: UserRepository,
-    private readonly jwtTokenService: TokenService
+    private readonly otpRepository: IOtpRepository,
+    private readonly userRepository: IUserRepository,
+    private readonly jwtTokenService: ITokenService
   ) {}
 
   async execute(code: string, res: Response) {

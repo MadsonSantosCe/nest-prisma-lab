@@ -7,13 +7,13 @@ import {
 } from "@nestjs/common";
 import { Request } from "express";
 import { PrismaService } from "src/database/prisma.service";
-import { TokenService } from "../../domain/services/token.service";
+import { ITokenService } from "../../domain/services/abstract-token.service";
 
 @Global()
 @Injectable()
 export class AuthGuard implements CanActivate {
   constructor(
-    private readonly jwtTokenService: TokenService,
+    private readonly jwtTokenService: ITokenService,
     private readonly prisma: PrismaService
   ) {}
 

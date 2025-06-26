@@ -4,15 +4,15 @@ import {
   UnauthorizedException,
 } from "@nestjs/common";
 import { Response } from "express";
-import { UserRepository } from "src/auth/domain/repositories/user.repository";
-import { TokenService } from "src/auth/domain/services/token.service";
+import { IUserRepository } from "src/auth/domain/repositories/abstract-user.repository";
+import { ITokenService } from "src/auth/domain/services/abstract-token.service";
 import bcrypt from "bcryptjs";
 
 @Injectable()
 export class SignInUseCase {
   constructor(
-    private readonly userRepository: UserRepository,
-    private readonly jwtTokenService: TokenService
+    private readonly userRepository: IUserRepository,
+    private readonly jwtTokenService: ITokenService
   ) {}
 
   async execute(email: string, password: string, res: Response) {

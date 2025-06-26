@@ -1,18 +1,18 @@
 import { Injectable, NotFoundException } from "@nestjs/common";
-import { UserRepository } from "../../domain/repositories/user.repository";
-import { User } from "../../domain/entities/User";
+import { IUserRepository } from "../../domain/repositories/abstract-user.repository";
+import { AuthUser } from "../../domain/entities/user.entity";
 import { PrismaService } from "src/database/prisma.service";
 
 @Injectable()
-export class PrismaUserRepository implements UserRepository {
+export class PrismaUserRepository implements IUserRepository {
   constructor(private readonly prisma: PrismaService) {}
 
-  async findByEmail(email: string): Promise<User | null> {
+  async findByEmail(email: string): Promise<AuthUser | null> {
     const user = await this.prisma.user.findUnique({ where: { email } });
 
     if (!user) return null;
 
-    return new User(
+    return new AuthUser(
       user.id,
       user.name,
       user.email,
@@ -21,12 +21,12 @@ export class PrismaUserRepository implements UserRepository {
     );
   }
 
-  async findById(id: string): Promise<User> {
+  async findById(id: string): Promise<AuthUser> {
     const user = await this.prisma.user.findUnique({ where: { id } });
 
     if (!user) throw new NotFoundException("Usuário não encontrado");
 
-    return new User(
+    return new AuthUser(
       user.id,
       user.name,
       user.email,
@@ -39,7 +39,7 @@ export class PrismaUserRepository implements UserRepository {
     name: string;
     email: string;
     password: string;
-  }): Promise<User> {
+  }): Promise<AuthUser> {
     const newUser = await this.prisma.user.create({
       data: {
         name: user.name,
@@ -48,7 +48,7 @@ export class PrismaUserRepository implements UserRepository {
       },
     });
 
-    return new User(
+    return new AuthUser(
       newUser.id,
       newUser.name,
       newUser.email,
@@ -57,7 +57,10 @@ export class PrismaUserRepository implements UserRepository {
     );
   }
 
-  async updateVerified(id: string, verified: boolean): Promise<User | null> {
+  async updateVerified(
+    id: string,
+    verified: boolean
+  ): Promise<AuthUser | null> {
     const updated = await this.prisma.user.update({
       where: { id },
       data: { verified },
@@ -65,7 +68,7 @@ export class PrismaUserRepository implements UserRepository {
 
     if (!updated) return null;
 
-    return new User(
+    return new AuthUser(
       updated.id,
       updated.name,
       updated.email,

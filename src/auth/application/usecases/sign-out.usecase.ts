@@ -1,10 +1,10 @@
 import { Injectable } from "@nestjs/common";
-import { TokenService } from "src/auth/domain/services/token.service";
+import { ITokenService } from "src/auth/domain/services/abstract-token.service";
 import { Response } from "express";
 
 @Injectable()
 export class SignOutUseCase {
-  constructor(private readonly JwtTokenService: TokenService) {}
+  constructor(private readonly JwtTokenService: ITokenService) {}
 
   execute(res: Response) {
     this.JwtTokenService.clearRefreshTokenCookie(res);

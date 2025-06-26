@@ -3,14 +3,14 @@ import {
   NotFoundException,
   UnauthorizedException,
 } from "@nestjs/common";
-import { UserRepository } from "src/auth/domain/repositories/user.repository";
-import { TokenService } from "src/auth/domain/services/token.service";
+import { IUserRepository } from "src/auth/domain/repositories/abstract-user.repository";
+import { ITokenService } from "src/auth/domain/services/abstract-token.service";
 
 @Injectable()
 export class RefreshTokenUseCase {
   constructor(
-    private userRepository: UserRepository,
-    private jwtTokenService: TokenService
+    private userRepository: IUserRepository,
+    private jwtTokenService: ITokenService
   ) {}
 
   async execute(refreshToken: string) {
