@@ -19,6 +19,7 @@ import { SignOutUseCase } from "./application/usecases/sign-out.usecase";
 import { ForgotPasswordUseCase } from "./application/usecases/forgot-password.usecase";
 import { ResetPasswordUseCase } from "./application/usecases/reset-password.usecase";
 import { RefreshTokenUseCase } from "./application/usecases/refresh-token.usecase";
+import { AuthGuard } from "./infrastructure/guards/auth.guard";
 
 @Module({
   imports: [
@@ -27,6 +28,7 @@ import { RefreshTokenUseCase } from "./application/usecases/refresh-token.usecas
     }),
   ],
   providers: [
+    AuthGuard,
     PrismaUserRepository,
     PrismaOtpRepository,
     NodemailerEmailService,
@@ -56,5 +58,6 @@ import { RefreshTokenUseCase } from "./application/usecases/refresh-token.usecas
     },
   ],
   controllers: [AuthController],
+  exports: [AuthGuard],
 })
 export class AuthModule {}
